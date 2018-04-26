@@ -1,9 +1,6 @@
-const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-
-// Mongoose internally uses a promise-like object,
-// but its better to make Mongoose use built in es6 promises
+const morgan = require('morgan');
 mongoose.Promise = global.Promise;
 
 // config.js is where we control constants for entire
@@ -12,7 +9,9 @@ const { PORT, DATABASE_URL } = require('./config');
 const { BlogPost } = require('./models');
 
 const app = express();
-app.use(bodyParser.json());
+
+app.use(morgan('common'));
+app.use(express.json());
 
 // GET requests to /blog => return 10 posts
 app.get('/posts', (req, res) => {
