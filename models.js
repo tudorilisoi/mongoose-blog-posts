@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 // this is our schema to represent a restaurant
 const blogPostSchema = mongoose.Schema({
@@ -18,11 +19,6 @@ const blogPostSchema = mongoose.Schema({
 blogPostSchema.virtual('authorName').get(function() {
   return `${this.author.firstName} ${this.author.lastName}`.trim()});
 
-// this virtual grabs the most recent grade for a BlogPost.
-blogPostSchema.virtual('grade').get(function() {
-  const gradeObj = this.grades.sort((a, b) => {return b.date - a.date})[0] || {};
-  return gradeObj.grade;
-});
 
 // this is an *instance method* which will be available on all instances
 // of the model. This method will be used to return an object that only
